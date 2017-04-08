@@ -1,0 +1,25 @@
+{
+  "name": "ts-console-log",
+  "version": "0.1.2",
+  "description": "Simple Logger for TypeScript using Decorators",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xan0C/typescript_logger"
+  },
+  "keywords": [
+    "ts",
+    "typescript",
+    "log",
+    "logger"
+  ],
+  "author": "Sören Vullriede",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^2.2.2"
+  }
+}
