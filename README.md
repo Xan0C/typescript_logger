@@ -1,2 +1,2 @@
-# typescript_logger
-Really simple logger, made this to learn about decorators in typescript
+# ts-simple-log
+Really simple console logger for typescript
