@@ -40,7 +40,8 @@ export class Logger implements Console {
         'timeEnd',
         'trace',
         'warn',
-        'msIsIndependentlyComposed'
+        'msIsIndependentlyComposed',
+        'none'
     ];
 
     private constructor(logger: Console = console, logLevel: LogLevel = LogLevel.LOG) {
@@ -195,7 +196,6 @@ export class Logger implements Console {
  */
 export function log(level: LogLevel = LogLevel.LOG) {
     return (...args: any[]) => {
-        let log;
         switch (args.length) {
             case 1:
                 return logClass(level).apply(this,args);
@@ -228,7 +228,7 @@ function logClass(level: LogLevel): any {
         }
 
         let f: any = function (...args) {
-            console.log("@Log{Class}: Created instance of: " + original.name);
+            Logger.getInstance()[level as string]("@Log{Class}: Created instance of: " + original.name);
             return construct(original, args);
         };
         f.prototype = original.prototype;
