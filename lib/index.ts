@@ -138,16 +138,22 @@ export class Logger implements Console {
                 };
                 return;
             case LogLevel.INFO:
+                this.trace = (msg?: string, ...args) => {
+                };
                 this.debug = (msg?: string, ...args) => {
                 };
                 return;
             case LogLevel.LOG:
+                this.trace = (msg?: string, ...args) => {
+                };
                 this.debug = (msg?: string, ...args) => {
                 };
                 this.info = (msg?: string, ...args) => {
                 };
                 return;
             case LogLevel.WARN:
+                this.trace = (msg?: string, ...args) => {
+                };
                 this.debug = (msg?: string, ...args) => {
                 };
                 this.info = (msg?: string, ...args) => {
@@ -156,6 +162,8 @@ export class Logger implements Console {
                 };
                 return;
             case LogLevel.ERROR:
+                this.trace = (msg?: string, ...args) => {
+                };
                 this.debug = (msg?: string, ...args) => {
                 };
                 this.info = (msg?: string, ...args) => {
