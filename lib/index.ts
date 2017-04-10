@@ -207,10 +207,10 @@ export function log(level: LogLevel = LogLevel.LOG) {
         switch (args.length) {
             case 1:
                 return logClass(level).apply(this,args);
-            case 2:
-                return;
             case 3:
-                if(args[2].value && typeof args[2].value === "function"){
+                if(!args[2]){
+                    return logProperty(level).apply(this,args);
+                }else if(args[2].value && typeof args[2].value === "function"){
                     return logMethod(level).apply(this,args);
                 }else if(args[2].get && args[2].set){
                     return logAccessor(level).apply(this,args);
@@ -259,7 +259,7 @@ function logAccessor(level:LogLevel){
     };
 }
 function logMethod(level:LogLevel){
-    return function(target: Function, key: string, descriptor: any) {
+    return function(target: Function, key: string, descriptor: PropertyDescriptor) {
         let value = descriptor.value;
         descriptor.value = function (...args: any[]) {
             let a = args.map(a => JSON.stringify(a)).join();
@@ -269,5 +269,10 @@ function logMethod(level:LogLevel){
             return result;
         };
         return descriptor;
+    }
+}
+function logProperty(level:LogLevel){
+    return function(target:any,key:string){
+        Logger.getInstance()[level as string](`@Log{property} declared property ${key} for class ${target.constructor.name}`);
     }
 }
