@@ -124,6 +124,8 @@ export class Logger implements Console {
         return false;
     }
 
+    private static dummy(){}
+
     private bindLogger(logger: Console): void {
         for (let type of this.logFuncs) {
             if (logger[type] && logger[type].bind) {
@@ -134,47 +136,32 @@ export class Logger implements Console {
             case LogLevel.TRACE:
                 return;
             case LogLevel.DEBUG:
-                this.trace = (msg?: string, ...args) => {
-                };
+                this.trace = Logger.dummy;
                 return;
             case LogLevel.INFO:
-                this.trace = (msg?: string, ...args) => {
-                };
-                this.debug = (msg?: string, ...args) => {
-                };
+                this.trace = Logger.dummy;
+                this.debug = Logger.dummy;
                 return;
             case LogLevel.LOG:
-                this.trace = (msg?: string, ...args) => {
-                };
-                this.debug = (msg?: string, ...args) => {
-                };
-                this.info = (msg?: string, ...args) => {
-                };
+                this.trace = Logger.dummy;
+                this.debug = Logger.dummy;
+                this.info = Logger.dummy;
                 return;
             case LogLevel.WARN:
-                this.trace = (msg?: string, ...args) => {
-                };
-                this.debug = (msg?: string, ...args) => {
-                };
-                this.info = (msg?: string, ...args) => {
-                };
-                this.log = (msg?: string, ...args) => {
-                };
+                this.trace = Logger.dummy;
+                this.debug = Logger.dummy;
+                this.info = Logger.dummy;
+                this.log = Logger.dummy;
                 return;
             case LogLevel.ERROR:
-                this.trace = (msg?: string, ...args) => {
-                };
-                this.debug = (msg?: string, ...args) => {
-                };
-                this.info = (msg?: string, ...args) => {
-                };
-                this.log = (msg?: string, ...args) => {
-                };
+                this.trace = Logger.dummy;
+                this.debug = Logger.dummy;
+                this.info = Logger.dummy;
+                this.log = Logger.dummy;
                 return;
             case LogLevel.NONE:
                 for (let type of this.logFuncs) {
-                    this[type] = () => {
-                    };
+                    this[type] = Logger.dummy;
                 }
         }
     }
@@ -200,9 +187,9 @@ export class Logger implements Console {
 /**
  * See http://blog.wolksoftware.com/decorators-metadata-reflection-in-typescript-from-novice-to-expert-part-i
  * @param level
- * @returns {(...args:any[])=>undefined}
+ * @returns {(...args:any[])=>any}
  */
-export function log(level: LogLevel = LogLevel.LOG) {
+export function log(level: LogLevel = LogLevel.LOG):(...args)=>any {
     return (...args: any[]) => {
         switch (args.length) {
             case 1:
