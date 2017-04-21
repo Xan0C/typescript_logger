@@ -210,23 +210,13 @@ export function log(level: LogLevel = LogLevel.LOG):(...args)=>any {
  * @param level
  * @returns {(target:any)=>any}
  */
-function logClass(level: LogLevel): any {
-    return function (target: any) {
-        let original = target;
-
-        function construct(classConstructor, args) {
-            let c: any = function () {
-                return classConstructor.apply(this, args);
-            };
-            c.prototype = classConstructor.prototype;
-            return new c();
-        }
-
+function logClass<T extends {new(...args):any}>(level: LogLevel):(target:T)=>T {
+    return function (target: T):T {
         let f: any = function (...args) {
-            Logger.getInstance()[level as string]("@Log{Class}: Created instance of: " + original.name);
-            return construct(original, args);
+            Logger.getInstance()[level as string]("@Log{Class}: Created instance of: " + (target as any).name);
+            return new target(args);
         };
-        f.prototype = original.prototype;
+        f.prototype = target.prototype;
         return f;
     };
 }
