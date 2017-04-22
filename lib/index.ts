@@ -57,16 +57,16 @@ export class Logger implements Console {
         return Logger.instance;
     }
 
-    assert(test?: boolean, message?: string, ...optionalParams): void {
+    assert(test?: boolean, message?: any, ...optionalParams): void {
     }
 
     clear(): void {
     }
 
-    count(countTitle?: string): void {
+    count(countTitle?: any): void {
     }
 
-    debug(message?: string, ...optionalParams): void {
+    debug(message?: any, ...optionalParams): void {
     }
 
     dir(value?: any, ...optionalParams): void {
@@ -78,7 +78,7 @@ export class Logger implements Console {
     error(message?: any, ...optionalParams): void {
     }
 
-    exception(message?: string, ...optionalParams): void {
+    exception(message?: any, ...optionalParams): void {
     }
 
     group(groupTitle?: string): void {
@@ -212,10 +212,12 @@ export function log(level: LogLevel = LogLevel.LOG):(...args)=>any {
  */
 function logClass<T extends {new(...args):any}>(level: LogLevel):(target:T)=>T {
     return function (target: T):T {
-        let wrapper = function(args){new (target.bind.apply(target, [void 0].concat(args)))()};
+        let wrapper = function(args){ return new (target.bind.apply(target, [void 0].concat(args)))()};
         let f:any = function (...args) {
             Logger.getInstance()[level as string]("@Log{Class}: Creating instance of: " + (target as any).name);
-            return wrapper.apply(this,args);
+            let result = wrapper.apply(this,args);
+            Object['setPrototypeOf'](result,Object.getPrototypeOf(this));
+            return result;
         };
         f.prototype = target.prototype;
         return f;
@@ -254,3 +256,9 @@ function logProperty(level:LogLevel){
         Logger.getInstance()[level as string](`@Log{property} declared property ${key} for class ${target.constructor.name}`);
     }
 }
+
+//setPrototypeOf Polyfill
+Object['setPrototypeOf'] = Object['setPrototypeOf'] || function(obj, proto) {
+        obj.__proto__ = proto;
+        return obj;
+};
