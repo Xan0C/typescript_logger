@@ -1,6 +1,6 @@
 {
   "name": "ts-simple-log",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Simple Logger for TypeScript with support for Decorators",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
