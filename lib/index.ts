@@ -212,7 +212,7 @@ export function log(level: LogLevel = LogLevel.LOG):(...args)=>any {
  */
 function logClass<T extends {new(...args):any}>(level: LogLevel):(target:T)=>T {
     return function (target: T):T {
-        let wrapper = function(args){ return new (target.bind.apply(target, [void 0].concat(args)))(); };
+        let wrapper = function(...args){ return new (target.bind.apply(target, [void 0].concat(args)))(); };
         let f:any = function (...args) {
             Logger.getInstance()[level as string]("@Log{Class}: Creating instance of: " + (target as any).name);
             let result = wrapper.apply(this,args);
