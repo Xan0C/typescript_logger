@@ -11,7 +11,7 @@ export class LogLevel {
     public static readonly NONE: string = "none";
 }
 
-export class Logger {
+export class Logger implements Console {
     private static instance: Logger;
     private _logLevel: LogLevel;
     private _console: Console;
@@ -48,6 +48,7 @@ export class Logger {
     private constructor(logger: Console = console, logLevel: LogLevel = LogLevel.LOG) {
         this._logLevel = logLevel;
         this._console = logger;
+        this.memory = this._console.memory;
         this.bindLogger(logger);
     }
 
@@ -100,10 +101,80 @@ export class Logger {
         }
     }
 
+    memory: any;
+
     trace(message?: any, ...optionalParams: any[]): void {}
     debug(message?: any, ...optionalParams: any[]): void {}
     info(message?: any, ...optionalParams: any[]): void {}
     log(message?: any, ...optionalParams: any[]): void {}
+
+    assert(condition?: boolean, message?: string, ...data: any[]): void {
+    }
+
+    clear(): void {
+    }
+
+    count(label?: string): void {
+    }
+
+    dir(value?: any, ...optionalParams: any[]): void {
+    }
+
+    dirxml(value: any): void {
+    }
+
+    error(message?: any, ...optionalParams: any[]): void {
+    }
+
+    exception(message?: string, ...optionalParams: any[]): void {
+    }
+
+    group(groupTitle?: string, ...optionalParams: any[]): void {
+    }
+
+    groupCollapsed(groupTitle?: string, ...optionalParams: any[]): void {
+    }
+
+    groupEnd(): void {
+    }
+
+    markTimeline(label?: string): void {
+    }
+
+    msIsIndependentlyComposed(element: Element): boolean {
+        return false;
+    }
+
+    profile(reportName?: string): void {
+    }
+
+    profileEnd(): void {
+    }
+
+    select(element: Element): void {
+    }
+
+    table(...tabularData: any[]): void {
+    }
+
+    time(label?: string): void {
+    }
+
+    timeEnd(label?: string): void {
+    }
+
+    timeStamp(label?: string): void {
+    }
+
+    timeline(label?: string): void {
+    }
+
+    timelineEnd(label?: string): void {
+    }
+
+    warn(message?: any, ...optionalParams: any[]): void {
+    }
+
 
     get logLevel(): LogLevel {
         return this._logLevel;
