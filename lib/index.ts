@@ -10,7 +10,8 @@ export class LogLevel {
     public static readonly ERROR: string = "error";
     public static readonly NONE: string = "none";
 }
-export class Logger implements Console {
+
+export class Logger {
     private static instance: Logger;
     private _logLevel: LogLevel;
     private _console: Console;
@@ -57,73 +58,6 @@ export class Logger implements Console {
         return Logger.instance;
     }
 
-    assert(test?: boolean, message?: any, ...optionalParams): void {
-    }
-
-    clear(): void {
-    }
-
-    count(countTitle?: any): void {
-    }
-
-    debug(message?: any, ...optionalParams): void {
-    }
-
-    dir(value?: any, ...optionalParams): void {
-    }
-
-    dirxml(value: any): void {
-    }
-
-    error(message?: any, ...optionalParams): void {
-    }
-
-    exception(message?: any, ...optionalParams): void {
-    }
-
-    group(groupTitle?: string): void {
-    }
-
-    groupCollapsed(groupTitle?: string): void {
-    }
-
-    groupEnd(): void {
-    }
-
-    info(message?: any, ...optionalParams): void {
-    }
-
-    log(message?: any, ...optionalParams): void {
-    }
-
-    profile(reportName?: string): void {
-    }
-
-    profileEnd(): void {
-    }
-
-    select(element: Element): void {
-    }
-
-    table(...data): void {
-    }
-
-    time(timerName?: string): void {
-    }
-
-    timeEnd(timerName?: string): void {
-    }
-
-    trace(message?: any, ...optionalParams): void {
-    }
-
-    warn(message?: any, ...optionalParams): void {
-    }
-
-    msIsIndependentlyComposed(element: Element): boolean {
-        return false;
-    }
-
     private static dummy(){}
 
     private bindLogger(logger: Console): void {
@@ -165,6 +99,11 @@ export class Logger implements Console {
                 }
         }
     }
+
+    trace(message?: any, ...optionalParams: any[]): void {}
+    debug(message?: any, ...optionalParams: any[]): void {}
+    info(message?: any, ...optionalParams: any[]): void {}
+    log(message?: any, ...optionalParams: any[]): void {}
 
     get logLevel(): LogLevel {
         return this._logLevel;
